@@ -15,6 +15,8 @@ const browserSync = require('browser-sync').create();
 const debug = require('gulp-debug');
 const sass = require('gulp-sass');
 const webpackStream = require('webpack-stream');
+const ttf2woff      = require('gulp-ttf2woff');
+const ttf2woff2     = require('gulp-ttf2woff2');
 const buffer = require('vinyl-buffer');
 const postcss = require('gulp-postcss');
 const autoprefixer = require("autoprefixer");
@@ -32,6 +34,16 @@ const prettyHtml = require('gulp-pretty-html');
 const replace = require('gulp-replace');
 const ghpages = require('gh-pages');
 const path = require('path');
+
+const fonts = () => {
+  src('./src/fonts/**.ttf')
+    .pipe(ttf2woff())
+    .pipe(dest('./build/fonts/'))
+  return src('./src/fonts/**.ttf')
+    .pipe(ttf2woff2())
+    .pipe(dest('./build/fonts/'))
+}
+exports.fonts = fonts;
 
 // Глобальные настройки этого запуска
 const buildLibrary = process.env.BUILD_LIBRARY || false;
